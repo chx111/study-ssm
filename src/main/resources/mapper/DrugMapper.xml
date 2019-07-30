@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whq6.study.mapper.DrugMapper">
+  <resultMap id="BaseResultMap" type="top.whq6.study.entity.Drug">
+    <id column="drug_id" jdbcType="INTEGER" property="drugId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="drug_name" jdbcType="VARCHAR" property="drugName" />
+    <result column="drug_effect" jdbcType="VARCHAR" property="drugEffect" />
+    <result column="drug_intro" jdbcType="VARCHAR" property="drugIntro" />
+    <result column="drug_price" jdbcType="INTEGER" property="drugPrice" />
+    <result column="drug_recommender" jdbcType="VARCHAR" property="drugRecommender" />
+    <result column="drug_primary_key" jdbcType="VARCHAR" property="drugPrimaryKey" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    drug_id, user_id, drug_name, drug_effect, drug_intro, drug_price, drug_recommender, 
+    drug_primary_key
+  </sql>
+  <select id="selectByExample" parameterType="top.whq6.study.entity.DrugExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from drug
+    where drug_id = #{drugId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from drug
+    where drug_id = #{drugId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.whq6.study.entity.DrugExample">
+    delete from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.whq6.study.entity.Drug">
+    insert into drug (drug_id, user_id, drug_name, 
+      drug_effect, drug_intro, drug_price, 
+      drug_recommender, drug_primary_key)
+    values (#{drugId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{drugName,jdbcType=VARCHAR}, 
+      #{drugEffect,jdbcType=VARCHAR}, #{drugIntro,jdbcType=VARCHAR}, #{drugPrice,jdbcType=INTEGER}, 
+      #{drugRecommender,jdbcType=VARCHAR}, #{drugPrimaryKey,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="top.whq6.study.entity.Drug">
+    insert into drug
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="drugId != null">
+        drug_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="drugName != null">
+        drug_name,
+      </if>
+      <if test="drugEffect != null">
+        drug_effect,
+      </if>
+      <if test="drugIntro != null">
+        drug_intro,
+      </if>
+      <if test="drugPrice != null">
+        drug_price,
+      </if>
+      <if test="drugRecommender != null">
+        drug_recommender,
+      </if>
+      <if test="drugPrimaryKey != null">
+        drug_primary_key,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="drugId != null">
+        #{drugId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="drugName != null">
+        #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugEffect != null">
+        #{drugEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="drugIntro != null">
+        #{drugIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrice != null">
+        #{drugPrice,jdbcType=INTEGER},
+      </if>
+      <if test="drugRecommender != null">
+        #{drugRecommender,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrimaryKey != null">
+        #{drugPrimaryKey,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.whq6.study.entity.DrugExample" resultType="java.lang.Long">
+    select count(*) from drug
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update drug
+    <set>
+      <if test="record.drugId != null">
+        drug_id = #{record.drugId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.drugName != null">
+        drug_name = #{record.drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugEffect != null">
+        drug_effect = #{record.drugEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugIntro != null">
+        drug_intro = #{record.drugIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugPrice != null">
+        drug_price = #{record.drugPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.drugRecommender != null">
+        drug_recommender = #{record.drugRecommender,jdbcType=VARCHAR},
+      </if>
+      <if test="record.drugPrimaryKey != null">
+        drug_primary_key = #{record.drugPrimaryKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update drug
+    set drug_id = #{record.drugId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      drug_name = #{record.drugName,jdbcType=VARCHAR},
+      drug_effect = #{record.drugEffect,jdbcType=VARCHAR},
+      drug_intro = #{record.drugIntro,jdbcType=VARCHAR},
+      drug_price = #{record.drugPrice,jdbcType=INTEGER},
+      drug_recommender = #{record.drugRecommender,jdbcType=VARCHAR},
+      drug_primary_key = #{record.drugPrimaryKey,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.whq6.study.entity.Drug">
+    update drug
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="drugName != null">
+        drug_name = #{drugName,jdbcType=VARCHAR},
+      </if>
+      <if test="drugEffect != null">
+        drug_effect = #{drugEffect,jdbcType=VARCHAR},
+      </if>
+      <if test="drugIntro != null">
+        drug_intro = #{drugIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrice != null">
+        drug_price = #{drugPrice,jdbcType=INTEGER},
+      </if>
+      <if test="drugRecommender != null">
+        drug_recommender = #{drugRecommender,jdbcType=VARCHAR},
+      </if>
+      <if test="drugPrimaryKey != null">
+        drug_primary_key = #{drugPrimaryKey,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where drug_id = #{drugId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.whq6.study.entity.Drug">
+    update drug
+    set user_id = #{userId,jdbcType=INTEGER},
+      drug_name = #{drugName,jdbcType=VARCHAR},
+      drug_effect = #{drugEffect,jdbcType=VARCHAR},
+      drug_intro = #{drugIntro,jdbcType=VARCHAR},
+      drug_price = #{drugPrice,jdbcType=INTEGER},
+      drug_recommender = #{drugRecommender,jdbcType=VARCHAR},
+      drug_primary_key = #{drugPrimaryKey,jdbcType=VARCHAR}
+    where drug_id = #{drugId,jdbcType=INTEGER}
+  </update>
+</mapper>

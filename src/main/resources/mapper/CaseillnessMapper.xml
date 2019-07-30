@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.whq6.study.mapper.CaseillnessMapper">
+  <resultMap id="BaseResultMap" type="top.whq6.study.entity.Caseillness">
+    <id column="caseillness_id" jdbcType="INTEGER" property="caseillnessId" />
+    <result column="caseillness_name" jdbcType="VARCHAR" property="caseillnessName" />
+    <result column="caseillness_condition" jdbcType="VARCHAR" property="caseillnessCondition" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    caseillness_id, caseillness_name, caseillness_condition
+  </sql>
+  <select id="selectByExample" parameterType="top.whq6.study.entity.CaseillnessExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from caseillness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from caseillness
+    where caseillness_id = #{caseillnessId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from caseillness
+    where caseillness_id = #{caseillnessId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="top.whq6.study.entity.CaseillnessExample">
+    delete from caseillness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="top.whq6.study.entity.Caseillness">
+    insert into caseillness (caseillness_id, caseillness_name, caseillness_condition
+      )
+    values (#{caseillnessId,jdbcType=INTEGER}, #{caseillnessName,jdbcType=VARCHAR}, #{caseillnessCondition,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="top.whq6.study.entity.Caseillness">
+    insert into caseillness
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="caseillnessId != null">
+        caseillness_id,
+      </if>
+      <if test="caseillnessName != null">
+        caseillness_name,
+      </if>
+      <if test="caseillnessCondition != null">
+        caseillness_condition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="caseillnessId != null">
+        #{caseillnessId,jdbcType=INTEGER},
+      </if>
+      <if test="caseillnessName != null">
+        #{caseillnessName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseillnessCondition != null">
+        #{caseillnessCondition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="top.whq6.study.entity.CaseillnessExample" resultType="java.lang.Long">
+    select count(*) from caseillness
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update caseillness
+    <set>
+      <if test="record.caseillnessId != null">
+        caseillness_id = #{record.caseillnessId,jdbcType=INTEGER},
+      </if>
+      <if test="record.caseillnessName != null">
+        caseillness_name = #{record.caseillnessName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.caseillnessCondition != null">
+        caseillness_condition = #{record.caseillnessCondition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update caseillness
+    set caseillness_id = #{record.caseillnessId,jdbcType=INTEGER},
+      caseillness_name = #{record.caseillnessName,jdbcType=VARCHAR},
+      caseillness_condition = #{record.caseillnessCondition,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="top.whq6.study.entity.Caseillness">
+    update caseillness
+    <set>
+      <if test="caseillnessName != null">
+        caseillness_name = #{caseillnessName,jdbcType=VARCHAR},
+      </if>
+      <if test="caseillnessCondition != null">
+        caseillness_condition = #{caseillnessCondition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where caseillness_id = #{caseillnessId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="top.whq6.study.entity.Caseillness">
+    update caseillness
+    set caseillness_name = #{caseillnessName,jdbcType=VARCHAR},
+      caseillness_condition = #{caseillnessCondition,jdbcType=VARCHAR}
+    where caseillness_id = #{caseillnessId,jdbcType=INTEGER}
+  </update>
+</mapper>
